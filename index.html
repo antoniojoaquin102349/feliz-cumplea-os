@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>¿Es tu cumpleaños 🎂 de verdad? </title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="hearts" id="hearts"></div>
+
+<div class="container">
+  <h1>¿Es tu cumpleaños 🎂 de verdad?<span class="heart-beat">💖</span></h1>
+  
+  <div class="message" id="message">Dale... no muerdo... (bueno... un poquito 😁)</div>
+  
+  <button id="yes">Chiii 😊</button>
+  <button id="no">Todavia no 😞</button>
+</div>
+
+<script>
+// ────────────────────────────────────────────────
+const noPhrases = [
+  "🤔 Mmmm... creo que sí eres tú...",
+  "¿Segura? Mira bien la fecha 😂",
+  "Hoy alguien que cumpleaños y sospecho bastante de ti 🎂",
+  "No intentes escapar 😏",
+  "Prometo que esta felicitación merece la pena ❤️",
+  "Vale... última oportunidad 😅",
+  "El botón de 'Sí' tiene mucha mejor pinta 😜",
+  "🎉 ¡Te he pillado! Feliz cumpleaños 😘 ❤️"
+];
+
+let noCount = 0;
+let yesClicked = false;
+
+const yesBtn   = document.getElementById("yes");
+const noBtn    = document.getElementById("no");
+const message  = document.getElementById("message");
+const heartsContainer = document.getElementById("hearts");
+
+yesBtn.addEventListener("click", () => {
+  if (yesClicked) return;
+  yesClicked = true;
+
+  message.innerHTML = `
+    <h2>Feliz cumpleaños 🎂🥳🎉😘, tienes un regalo 🎁🎈</h2>
+
+    <p>Espero que hoy sea un día lleno de sonrisas, abrazos y momentos bonitos.</p>
+
+    <p>Me alegra muchísimo haberte conocido y espero poder seguir compartiendo muchos momentos contigo.</p>
+
+    <p>Disfruta muchísimo de tu día porque te lo mereces. 💕</p>
+
+    <h3>🎁 Tu premio:</h3>
+
+    <p>Una cena pendiente, muchas risas... y un abrazo cuando nos veamos. 😊❤️</p>
+    `;
+
+  // ──── Aparece la foto ───────────────────────────────────────
+  const photoContainer = document.createElement("div");
+  photoContainer.style.margin = "25px auto";
+  photoContainer.style.maxWidth = "320px";
+  photoContainer.style.borderRadius = "16px";
+  photoContainer.style.overflow = "hidden";
+  photoContainer.style.boxShadow = "0 8px 25px rgba(233, 30, 99, 0.35)";
+  photoContainer.style.border = "3px solid #ff79b0";
+
+  const img = document.createElement("img");
+  img.src = "assets/IMG_4581.jpg";   
+  img.alt = "Yo pensando en ti 😏";
+  img.style.width = "100%";
+  img.style.display = "block";
+  img.style.borderRadius = "12px";
+
+  photoContainer.appendChild(img);
+  document.querySelector(".container").appendChild(photoContainer);
+  // ─────────────────────────────────────────────────────────────
+
+  yesBtn.style.display = "none";
+  noBtn.style.display = "none";
+
+  launchConfettiHearts(80);
+  setTimeout(() => launchConfettiHearts(120), 600);
+  setTimeout(() => launchConfettiHearts(100), 1200);
+
+  // Opcional: mensaje adicional después de unos segundos
+  setTimeout(() => {
+    message.innerHTML += "<br><br>nos vemos...  😘❤️";
+  }, 2000);
+});
+
+noBtn.addEventListener("click", () => {
+  if (yesClicked) return;
+
+  noCount++;
+  
+  if (noCount < noPhrases.length) {
+    message.textContent = noPhrases[noCount];
+  } else {
+    message.textContent = "💖 GAME OVER 💖";
+  }
+
+  const size = Math.max(0.5, 1.4 - noCount * 0.12);
+  noBtn.style.transform = `scale(${size})`;
+  noBtn.style.opacity = Math.max(0.3, 1 - noCount * 0.08);
+
+  const x = (Math.random() - 0.5) * 180;
+  const y = (Math.random() - 0.5) * 120;
+  noBtn.style.marginLeft = x + "px";
+  noBtn.style.marginTop  = y + "px";
+
+  if (noCount % 2 === 0) createSadHearts(5);
+});
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = ["💖","💘","💝","💗","❤️","🩷","🫀"][Math.floor(Math.random()*7)];
+  
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.top = "-10vh";
+  heart.style.fontSize = (Math.random() * 1.5 + 1.2) + "rem";
+  heart.style.animationDuration = (Math.random() * 5 + 6) + "s";
+  
+  heartsContainer.appendChild(heart);
+  
+  setTimeout(() => heart.remove(), 10000);
+}
+
+function launchConfettiHearts(count = 40) {
+  for (let i = 0; i < count; i++) {
+    setTimeout(createHeart, i * 40);
+  }
+}
+
+function createSadHearts(count) {
+  for (let i = 0; i < count; i++) {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "💔";
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.top = "-5vh";
+    h.style.fontSize = "2.2rem";
+    h.style.animationDuration = "4s";
+    h.style.opacity = "0.7";
+    heartsContainer.appendChild(h);
+    setTimeout(() => h.remove(), 5000);
+  }
+}
+
+// Corazones de fondo constantes
+setInterval(() => {
+  if (Math.random() > 0.6) createHeart();
+}, 1800);
+
+// Corazones iniciales
+launchConfettiHearts(30);
+
+</script>
+</body>
+</html>
+
