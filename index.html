@@ -45,7 +45,7 @@
       yesClicked = true;
 
       message.innerHTML = `
-        <h2>Feliz cumpleaños María 🎂🥳🎉 😘, tienes un regalo 🎁 🤭 para que cuando envies fotos en la cama tengas unos calcetines elegantes 😆</h2>
+        <h2>Feliz cumpleaños María 🎂🥳🎉 😘, tienes un regalo 🎁 😊* para que cuando envies fotos en la cama tengas unos calcetines elegantes 😆</h2>
 
         <p>Espero que hoy sea un día lleno de sonrisas, abrazos y momentos bonitos.</p>
 
@@ -55,7 +55,7 @@
 
         <h3>🎁 Tu regalo:</h3>
 
-        <p>Una cena pendiente/senderismo/paseo a caballo 😆, muchas risas... y un abrazo Sandía 😆 😘❤️</p>
+        <p>Una cena pendiente/senderismo/paseo a caballo 🤭, muchas risas... 😂 y un abrazo Sandía 😆 😘❤️</p>
         `;
 
       // ──── Aparece la foto ───────────────────────────────────────
@@ -100,6 +100,13 @@
         message.textContent = noPhrases[noCount];
       } else {
         message.textContent = "😂 GAME OVER 😂";
+
+        // Esperar 4 segundos y reiniciar la página
+        setTimeout(() => {
+          location.reload();
+        }, 1400);
+
+        return; // Evita que siga ejecutando el resto del código
       }
 
       const size = Math.max(0.5, 1.4 - noCount * 0.12);
